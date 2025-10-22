@@ -3,21 +3,22 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\User;
+use App\Models\Produit;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Favori>
- */
 class FavoriFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
-    public function definition(): array
+    protected $model = \App\Models\Favori::class;
+
+    public function definition()
     {
+        $userIds = User::pluck('id')->toArray();
+        $produitIds = Produit::pluck('id')->toArray();
+
         return [
-            //
+            'user_id' => $this->faker->randomElement($userIds),
+            'produit_id' => $this->faker->randomElement($produitIds),
+            'ref' => $this->faker->uuid(),
         ];
     }
 }

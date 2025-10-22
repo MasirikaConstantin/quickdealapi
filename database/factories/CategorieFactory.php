@@ -3,21 +3,24 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Categorie>
- */
 class CategorieFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
-    public function definition(): array
+    protected $model = \App\Models\Categorie::class;
+
+    public function definition()
     {
+        $nom = $this->faker->word();
+
         return [
-            //
+            'nom' => ucfirst($nom),
+            'slug' => Str::slug($nom . '-' . $this->faker->unique()->numberBetween(1, 1000)),
+            'description' => $this->faker->sentence(12),
+            'icone' => $this->faker->imageUrl(50, 50, 'technics'),
+            'image' => $this->faker->imageUrl(300, 200, 'technics'),
+            'est_active' => $this->faker->boolean(90),
+            'ref' => $this->faker->uuid(),
         ];
     }
 }

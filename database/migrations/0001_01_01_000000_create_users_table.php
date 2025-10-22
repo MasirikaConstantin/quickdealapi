@@ -29,6 +29,7 @@ return new class extends Migration
             $table->boolean('est_actif')->default(true);
             $table->decimal('note_vendeur', 3, 2)->default(0);
             $table->integer('ventes_totales')->default(0);
+            $table->uuid("ref")->unique();
             $table->rememberToken();
             $table->timestamps();
         });

@@ -13,15 +13,31 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        // Créer 10 utilisateurs
+        \App\Models\User::factory()->count(10)->create();
 
-        User::firstOrCreate(
-            ['email' => 'test@example.com'],
-            [
-                'name' => 'Test User',
-                'password' => 'password',
-                'email_verified_at' => now(),
-            ]
-        );
+        // Créer 5 catégories
+        \App\Models\Categorie::factory()->count(5)->create();
+
+        // Créer 3 méthodes de livraison
+        \App\Models\MethodeLivraison::factory()->count(3)->create();
+
+
+        \App\Models\Produit::factory(20)->create();
+        \App\Models\VariationProduit::factory(40)->create();
+        \App\Models\Panier::factory(10)->create();
+        \App\Models\ArticlePanier::factory(30)->create();
+        \App\Models\Commande::factory(15)->create();
+
+
+        \App\Models\Paiement::factory(15)->create();
+        \App\Models\ArticleCommande::factory(40)->create();
+        \App\Models\Avis::factory(30)->create();
+        \App\Models\Favori::factory(20)->create();
+        \App\Models\Conversation::factory(25)->create();
+        \App\Models\Message::factory(50)->create();
+        \App\Models\Notification::factory(30)->create();
+
+
     }
 }
