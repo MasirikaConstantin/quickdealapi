@@ -25,7 +25,7 @@ class ProduitFactory extends Factory
             'categorie_id' => $this->faker->randomElement($categorieIds),
             'user_id' => $this->faker->randomElement($userIds),
             'etat' => $this->faker->randomElement(['neuf', 'comme_neuf', 'bon', 'correct']),
-            'images' => json_encode([$this->faker->imageUrl(400, 400), $this->faker->imageUrl(400, 400)]),
+            //'images' => json_encode([$this->faker->imageUrl(400, 400), $this->faker->imageUrl(400, 400)]),
             'poids' => $this->faker->randomFloat(2, 0.1, 5),
             'dimensions' => json_encode([
                 'longueur' => $this->faker->randomFloat(2, 10, 100),

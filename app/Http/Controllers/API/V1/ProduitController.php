@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API\V1;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProduitRequest;
 use App\Http\Requests\UpdateProduitRequest;
+use App\Http\Resources\ProduitRessource;
 use App\Models\Produit;
 
 class ProduitController extends Controller
@@ -13,7 +15,12 @@ class ProduitController extends Controller
      */
     public function index()
     {
-        //
+        $produits = Produit::where('est_publie', true)
+        ->select('id', 'titre', 'description', 'prix', 'categorie_id', 'user_id', 'etat', 'images', 'poids', 'dimensions', 'est_en_vedette', 'nombre_vues', 'note', 'nombre_avis', 'ref', 'created_at')
+        ->with('categorie:id,nom,icone,ref', 'user:id,nom,prenom,ref')
+        ->paginate(10);
+        //return response()->json(($produits));
+        return response()->json(ProduitRessource::collection($produits));
     }
 
     /**

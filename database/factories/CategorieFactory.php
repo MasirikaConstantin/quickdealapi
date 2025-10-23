@@ -15,7 +15,6 @@ class CategorieFactory extends Factory
 
         return [
             'nom' => ucfirst($nom),
-            'slug' => Str::slug($nom . '-' . $this->faker->unique()->numberBetween(1, 1000)),
             'description' => $this->faker->sentence(12),
             'icone' => $this->faker->imageUrl(50, 50, 'technics'),
             'image' => $this->faker->imageUrl(300, 200, 'technics'),
