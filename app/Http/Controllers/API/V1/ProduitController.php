@@ -18,9 +18,9 @@ class ProduitController extends Controller
         $produits = Produit::where('est_publie', true)
         ->select('id', 'titre', 'description', 'prix', 'categorie_id', 'user_id', 'etat', 'images', 'poids', 'dimensions', 'est_en_vedette', 'nombre_vues', 'note', 'nombre_avis', 'ref', 'created_at')
         ->with('categorie:id,nom,icone,ref', 'user:id,nom,prenom,ref')
-        ->paginate(10);
+        ->paginate(1);
         //return response()->json(($produits));
-        return response()->json(ProduitRessource::collection($produits));
+        return ProduitRessource::collection($produits);
     }
 
     /**
