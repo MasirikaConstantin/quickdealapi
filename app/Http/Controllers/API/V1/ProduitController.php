@@ -42,9 +42,10 @@ class ProduitController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Produit $produit)
+    public function show(string $produit)
     {
-        //
+        $produit = Produit::where('ref', $produit)->first();
+        return new ProduitRessource($produit);
     }
 
     /**
