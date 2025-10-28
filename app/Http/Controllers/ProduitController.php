@@ -59,10 +59,9 @@ class ProduitController extends Controller
 private function handleFormRequest(Request $request, string $userRef)
 {
     $produit = Produit::where('ref', $userRef)->firstOrFail();
-    $produit->update($request->validated());
+    $images = $request->validated("images");
 
-    $images = $request->file('images');
-    if ($images instanceof UploadedFile) {
+    if ($images && $images instanceof UploadedFile) {
         $produit->addMedia($images)
             ->usingFileName(Str::random(40) . '.' . $images->getClientOriginalExtension())
             ->toMediaCollection('images');
