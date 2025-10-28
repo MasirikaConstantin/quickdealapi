@@ -45,6 +45,9 @@ class ProduitController extends Controller
     public function show(string $produit)
     {
         $produit = Produit::where('ref', $produit)->first();
+        $produit->increment('nombre_vues');
+        $produit->save();
+        $produit->load('categorie', 'user');
         return new ProduitRessource($produit);
     }
 
