@@ -102,7 +102,8 @@ private function handleFormRequest(Request $request, string $userRef)
                 dd($e->getMessage());
             }
             $produit = Produit::where('ref', $produit)->first();
-            $produit->update($request->validated());
+            unset($validated['images']);
+            $produit->update($validated);
             $this->handleFormRequest($request, $produit->ref);
             return redirect()->route('produits.index')->with('success', 'Produit modifié avec succès');
     }
