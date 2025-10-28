@@ -71,6 +71,14 @@ export interface User {
 export interface Produit{
     id:number,
     ref :string,
-    titre :string
-
+    titre :string,
+    description :string,
+    etat :string,
+    prix :number,
+    images :string,
+    images_thumb :string,
+    user_id :number,
+    created_at :string,
+    updated_at :string,
+    [key: string]: unknown; // This allows for additional properties...
 }

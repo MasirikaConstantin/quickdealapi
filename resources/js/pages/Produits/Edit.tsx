@@ -47,13 +47,13 @@ export default function EditProduits({produit}:{produit:Produit}){
                                 <h1 className="text-2xl font-bold tracking-tight">Image du produit  {produit.titre}</h1>
                             </div>
                             <div className="grid gap-2">
-                                <FormField label='Image du produit' htmlFor='image' error={errors['image']}>
+                                <FormField label='Image du produit' htmlFor='images' error={errors['images']}>
                                     <Input
-                                        id="image"
-                                        name='image'
+                                        id="images"
+                                        name='images'
                                         type="file"
                                         placeholder="Image"
-                                        aria-invalid={!!errors['image']}
+                                        aria-invalid={!!errors['images']}
                                         required
                                     />
                                 </FormField>

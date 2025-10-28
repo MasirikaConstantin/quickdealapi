@@ -61,11 +61,11 @@ private function handleFormRequest(Request $request, string $userRef)
     $produit = Produit::where('ref', $userRef)->firstOrFail();
     $produit->update($request->validated());
 
-    $image = $request->file('image');
-    if ($image instanceof UploadedFile) {
-        $produit->addMedia($image)
-            ->usingFileName(Str::random(40) . '.' . $image->getClientOriginalExtension())
-            ->toMediaCollection('image');
+    $images = $request->file('images');
+    if ($images instanceof UploadedFile) {
+        $produit->addMedia($images)
+            ->usingFileName(Str::random(40) . '.' . $images->getClientOriginalExtension())
+            ->toMediaCollection('images');
     }
 }
 
@@ -73,9 +73,12 @@ private function handleFormRequest(Request $request, string $userRef)
     /**
      * Display the specified resource.
      */
-    public function show(Produit $produit)
+    public function show(string $produit)
     {
-        //
+        $produit = Produit::where('ref', $produit)->first();
+        return Inertia::render('Produits/Show',[
+            "produit"=> new ProduitRessource($produit)
+        ]);
     }
 
     /**

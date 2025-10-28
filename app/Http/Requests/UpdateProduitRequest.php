@@ -22,7 +22,7 @@ class UpdateProduitRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "image" =>'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5096',
+            "images" =>'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5096',
 
         ];
     }

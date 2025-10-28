@@ -15,9 +15,10 @@ class ProduitRessource extends JsonResource
      * @return array<string, mixed>
      *
      */
-    
+    public static $wrap = null;
     public function toArray(Request $request): array
     {
+
         return [
             'id' => $this->whenHas('id', $this->resource->id),
             'titre' => $this->whenHas('titre', $this->resource->titre),
@@ -26,8 +27,8 @@ class ProduitRessource extends JsonResource
             'categorie_id' => $this->whenHas('categorie_id', $this->resource->categorie_id),
             'user_id' => $this->whenHas('user_id', $this->resource->user_id),
             'etat' => $this->whenHas('etat', $this->resource->etat),
-            'images_thumb' => $this->whenHas('images', $this->resource->getFirstMediaUrl('image','thumb')),
-            'images' => $this->whenHas('images', $this->resource->getFirstMediaUrl('image','medium')),
+            'images_thumb' => $this->whenHas('images', $this->resource->getFirstMediaUrl('images','thumb')),
+            'images' => $this->whenHas('images', $this->resource->getFirstMediaUrl('images','medium')),
             'poids' => $this->whenHas('poids', $this->resource->poids),
             'dimensions' => $this->whenHas('dimensions', $this->resource->dimensions),
             'est_publie' => $this->whenHas('est_publie', $this->resource->est_publie),
