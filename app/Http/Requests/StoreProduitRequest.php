@@ -22,7 +22,7 @@ class StoreProduitRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "images" =>'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5096',
+            "images" =>'nullable|file|image|mimes:jpeg,png,jpg,gif,svg|max:5096',
         ];
     }
 }
