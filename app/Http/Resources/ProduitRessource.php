@@ -46,7 +46,7 @@ class ProduitRessource extends JsonResource
             'ref' => $this->whenHas('ref', $this->resource->ref),
             'deleted_at' => $this->whenHas('deleted_at', $this->resource->deleted_at),
             'created_at' => $this->whenHas('created_at', $this->resource->created_at->diffForHumans()),
-            'updated_at' => $this->whenHas('updated_at', $this->resource->updated_at->diffForHumans()),
+            'updated_at' => $this->whenHas('updated_at', $this->resource->updated_at?->diffForHumans()),
             'categorie' =>  new CategorieResource($this->whenLoaded('categorie')),
             'user' => new UserResource($this->whenLoaded('user')),
         ];
