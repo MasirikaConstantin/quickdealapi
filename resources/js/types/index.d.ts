@@ -4,7 +4,10 @@ import { LucideIcon } from 'lucide-react';
 export interface Auth {
     user: User;
 }
-
+export interface Flash {
+    success : string | null;
+    error : string | null;
+}
 export interface PaginationCollection <T> {
     data:T[];
     links : {
@@ -75,8 +78,11 @@ export interface Produit{
     description :string,
     etat :string,
     prix :number,
-    images :string,
-    images_thumb :string,
+    images :{
+        id :number,
+        url :string,
+        thumb :string,
+    }[],
     user_id :number,
     created_at :string,
     updated_at :string,

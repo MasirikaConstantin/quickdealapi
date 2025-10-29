@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Inertia\Inertia;
 use Illuminate\Support\Str;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class ProduitController extends Controller
 {
@@ -31,6 +32,22 @@ class ProduitController extends Controller
             ),
         ]);
     }
+
+   
+public function deleteImage(Request $request, $produitId, $mediaId)
+{
+    $produit = Produit::findOrFail($produitId);
+    $media = $produit->media()->where('id', $mediaId)->first();
+
+    if (!$media) {
+        return back()->withErrors(['image' => 'Image introuvable ou ne correspond pas à ce produit.']);
+    }
+
+    $media->delete();
+
+    return back()->with('success', 'Image supprimée avec succès.');
+}
+
 
     /**
      * Show the form for creating a new resource.
@@ -55,18 +72,33 @@ class ProduitController extends Controller
             return redirect()->route('produits.index')->with('success', 'Utilisateur créé avec succès');
     }
 
-
-private function handleFormRequest(Request $request, string $userRef)
-{
-    $produit = Produit::where('ref', $userRef)->firstOrFail();
-    $images = $request->validated("images");
-
-    if ($images && $images instanceof UploadedFile) {
-        $produit->addMedia($images)
-            ->usingFileName(Str::random(40) . '.' . $images->getClientOriginalExtension())
-            ->toMediaCollection('images');
+   
+    private function handleFormRequest(Request $request, string $userRef)
+    {
+        $produit = Produit::where('ref', $userRef)->firstOrFail();
+        $image = $request->file('images'); // <- une seule image envoyée
+    
+        if ($image instanceof UploadedFile) {
+            // Vérifier la limite de 5 images max
+            $existingCount = $produit->getMedia('images')->count();
+            if ($existingCount >= 5) {
+                return back()->withErrors([
+                    'images' => 'Vous ne pouvez pas ajouter plus de 5 images pour ce produit.',
+                ]);
+            }
+    
+            // Ajouter l’image
+            $produit->addMedia($image)
+                ->usingFileName(Str::random(40) . '.' . $image->getClientOriginalExtension())
+                ->toMediaCollection('images');
+    
+            return back()->with('success', 'Image ajoutée avec succès.');
+        }
+    
+        return back()->withErrors(['images' => 'Aucune image reçue.']);
     }
-}
+    
+    
 
 
     /**
@@ -104,8 +136,16 @@ private function handleFormRequest(Request $request, string $userRef)
             $produit = Produit::where('ref', $produit)->first();
             unset($validated['images']);
             $produit->update($validated);
-            $this->handleFormRequest($request, $produit->ref);
-            return redirect()->route('produits.index')->with('success', 'Produit modifié avec succès');
+            try {
+                $this->handleFormRequest($request, $produit->ref);
+            return redirect()->route('produits.edit',[
+                'produit'=>$produit->ref
+            ])->with('success', 'Produit modifié avec succès');
+            } catch (\Exception $e) {
+                return redirect()->route('produits.edit',[
+                    'produit'=>$produit->ref
+                ])->with('error', $e->getMessage());
+            }
     }
 
     /**

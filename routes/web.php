@@ -17,5 +17,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('dashboard');
 });
 Route::resource('produits', ProduitController::class);
+Route::delete('/produits/{produit}/images/{media}', [ProduitController::class, 'deleteImage'])
+    ->name('produits.images.delete');
+
 
 require __DIR__.'/settings.php';

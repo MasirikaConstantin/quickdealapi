@@ -79,7 +79,7 @@ export default function IndexProduits({produits, search}:{produits : PaginationC
                                 return (
                                     <TableRow key={produit.id}>
                                         <TableCell className="font-medium">
-                                            { index +1}
+                                            { produit.id}
                                         </TableCell>
                                         <TableCell>
                                             <Avatar>

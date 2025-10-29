@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import AppLayout from "@/layouts/app-layout";
 import { dashboard } from "@/routes";
 import produits, { create, destroy, edit, index, show } from "@/routes/produits";
-import { Auth, type BreadcrumbItem, Produit, PaginationCollection } from "@/types";
+import { Auth, type BreadcrumbItem, Produit, PaginationCollection, Flash } from "@/types";
 import { Form, Head, Link, router, usePage } from "@inertiajs/react";
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { ChevronLeft, Eye, Pencil, Plus, Search, Trash2 } from "lucide-react";
@@ -13,6 +13,7 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { LaPagination } from "@/components/collection-pagination";
 import { Input } from "@/components/ui/input";
 import { FormField } from "@/components/form-field";
+import { toast } from "sonner";
 
 const breadcrumbs: BreadcrumbItem [] = [
     {
@@ -24,11 +25,17 @@ const breadcrumbs: BreadcrumbItem [] = [
         href : produits.index().url
     }
 ];  
-export default function EditProduits({produit}:{produit:Produit}){
+export default function EditProduits({produit, flash}:{produit:Produit, flash :Flash}){
     
     const handleDelete = (id: number) => {
         router.visit(destroy(id));
     };
+    if(flash.success){
+        toast.success(flash.success);
+    }
+    if(flash.error){
+        toast.error(flash.error);
+    }
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Les Produits"/>
